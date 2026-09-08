@@ -4,7 +4,7 @@ Galeria: https://bohunek5.github.io/targi/
 
 56 wizualizacji w 19 grupach koncepcji. Koncepcje 16–18 zawierają po trzy ujęcia, oficjalne oznaczenie dystrybutora KLUŚ oraz reklamy i szuflady zamiast małych opraw na wskazanej ścianie portfolio. Grupa 19 zawiera dwa zachowane warianty narożne z tabletami: bazowy oraz z portalem i fotometrią. Nie jest to komplet trzech rzutów. Pliki źródłowe obu wariantów są w `versions/tablety/`. Wcześniejsze koncepcje pozostają w kolekcji.
 
-Strona ma widok czterech kafelków w rzędzie i listy, filtry rzutów i koncepcji, ulubione, powiększenie, porównanie z oryginałem, pobieranie pojedynczych plików i ZIP, dodawanie własnych obrazów oraz eksport i import danych.
+Strona ma widok trzech kafelków w rzędzie, pogrupowanych według koncepcji i serii, oraz widok listy, filtry rzutów i koncepcji, ulubione, powiększenie, porównanie z oryginałem, pobieranie pojedynczych plików i ZIP, dodawanie własnych obrazów oraz eksport i import danych.
 
 Ulubione i własne obrazy są przechowywane wyłącznie w danej przeglądarce (localStorage i IndexedDB). Dodawanie obrazu nie publikuje go w repozytorium. Eksport JSON pozwala przenieść własne obrazy i ulubione na inne urządzenie. Czyszczenie danych witryny usuwa lokalne wybory; warto pobrać kopię.
 
@@ -22,6 +22,6 @@ Lokalnie: `python3 -m http.server 8765 --bind 127.0.0.1`, następnie http://127.
 
 ## Sprawdzenie
 
-`python3 check_gallery.py` — wymaga Playwright i Chromium. Test sprawdza pliki, filtry, ulubione po odświeżeniu, cztery kolumny, listę, porównanie z oryginałem, integralność ZIP, dodawanie, eksport/import i brak poziomego przewijania na telefonie.
+`python3 check_gallery.py` — wymaga Playwright i Chromium. Test sprawdza pliki, filtry, ulubione po odświeżeniu, trzy kolumny i rozdzielenie koncepcji, listę, porównanie z oryginałem, integralność ZIP, dodawanie, eksport/import i brak poziomego przewijania na telefonie.
 
 Publikacja GitHub Pages z gałęzi `main`, katalog `/`. Repozytorium jest oddzielone od pozostałych stron konta.

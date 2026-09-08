@@ -25,7 +25,11 @@ with sync_playwright() as p:
     for path in paths:
         assert context.request.get(URL+path).ok, path
     widths=page.locator('.card').evaluate_all('(cards)=>cards.slice(0,5).map(c=>({x:c.offsetLeft,y:c.offsetTop}))')
-    assert len({c['y'] for c in widths[:4]})==1 and widths[4]['y']>widths[0]['y']
+    assert len({c['y'] for c in widths[:3]})==1 and widths[3]['y']>widths[0]['y']
+    rows=page.locator('.card').evaluate_all('(cards)=>cards.map(c=>({y:c.offsetTop,id:c.dataset.id}))')
+    concepts={i['id']:i['concept'] for i in data['items']}
+    for y in {r['y'] for r in rows}:
+        assert len({concepts[r['id']] for r in rows if r['y']==y})==1
     img=page.locator('.image-button img').first.bounding_box()
     assert abs(img['width']/img['height']-16/9)<.03
     for view in [1,2,3]:
