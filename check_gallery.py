@@ -17,39 +17,49 @@ with sync_playwright() as p:
     page.goto(URL,wait_until='networkidle')
     data = page.evaluate('window.TARGI_CATALOG')
     total = len(data['items'])
-    assert total >= 45
+    assert total == 60
     concepts_data = {}
     for item in data['items']:
         concepts_data.setdefault(item['concept'], []).append(item['view'])
-    assert all(sorted(views) == [1, 2, 3] for views in concepts_data.values()), concepts_data
-    assert [i['concept'] for i in data['items'][:6]] == [19, 19, 19, 20, 20, 20]
+    assert all(sorted(views) == [1, 2, 3, 4] for views in concepts_data.values()), concepts_data
+    assert [i['concept'] for i in data['items'][:8]] == [19]*4 + [20]*4
+    assert sorted({i['number'] for i in data['items']}) == list(range(1,16))
     assert page.locator('.card').count()==total
     # Every gallery file is reachable, including images lazy-loaded below the fold.
-    paths = {item[k] for item in data['items'] for k in ['src','thumb','original']}
+    paths = {item[k] for item in data['items'] for k in ['src','thumb','original'] if item.get(k)}
     paths.update(a['src'] for i in data['items'] for a in i['attachments'])
     for path in paths:
         assert context.request.get(URL+path).ok, path
     widths=page.locator('.card').evaluate_all('(cards)=>cards.slice(0,5).map(c=>({x:c.offsetLeft,y:c.offsetTop}))')
-    assert len({c['y'] for c in widths[:3]})==1 and widths[3]['y']>widths[0]['y']
+    assert len({c['y'] for c in widths[:4]})==1 and widths[4]['y']>widths[0]['y']
     rows=page.locator('.card').evaluate_all('(cards)=>cards.map(c=>({y:c.offsetTop,id:c.dataset.id}))')
     concepts={i['id']:i['concept'] for i in data['items']}
     for y in {r['y'] for r in rows}:
         assert len({concepts[r['id']] for r in rows if r['y']==y})==1
-        assert len([r for r in rows if r['y']==y]) == 3
+        assert len([r for r in rows if r['y']==y]) == 4
     page.locator('#tablets').click()
-    assert page.locator('.card').count() == 6
+    assert page.locator('.card').count() == 8
     assert page.locator('.concept-heading').all_text_contents() == [
-        'Tablety — opcja 1Komplet · 3 rzuty', 'Tablety — opcja 2Komplet · 3 rzuty']
+        'Wariant 01 · Tablety — opcja 13 rzuty + portal', 'Wariant 02 · Tablety — opcja 23 rzuty + portal']
     page.reload(wait_until='networkidle')
-    assert page.locator('.card').count() == 6
-    assert page.locator('.portal-preview').count() == 1
-    assert context.request.get(URL + page.locator('.portal-preview').get_attribute('href')).ok
+    assert page.locator('.card').count() == 8
+    assert page.locator('.portal-preview').count() == 0
+    assert page.locator('.card details').count() == 0
     page.locator('#tablets').click()
     img=page.locator('.image-button img').first.bounding_box()
     assert abs(img['width']/img['height']-16/9)<.03
-    for view in [1,2,3]:
+    for view in [1,2,3,4]:
         page.locator(f'[data-view="{view}"]').click()
         assert page.locator('.card').count()==sum(i['view']==view for i in data['items'])
+    page.locator('[data-view="all"]').click()
+    page.locator('[data-view="4"]').click()
+    assert page.locator('[data-view="4"] strong').inner_text()=='Portal — środek'
+    assert 'Rzut 4' not in page.locator('body').inner_text()
+    page.locator('.image-button').first.click()
+    assert page.locator('#compare').is_hidden()
+    page.keyboard.press('Escape')
+    page.reload(wait_until='networkidle')
+    assert page.locator('.card').count()==15
     page.locator('[data-view="all"]').click()
     page.locator('[data-layout="list"]').click()
     assert page.locator('.gallery.list').count()==1
@@ -86,7 +96,7 @@ with sync_playwright() as p:
     favorites_before_upload=page.locator('#favorite-count').inner_text()
     fixture=next(ROOT.glob('thumbs/*.jpg'))
     page.locator('#add').click()
-    page.locator('#upload-view').select_option('2')
+    page.locator('#upload-view').select_option('4')
     page.locator('#upload-title-input').fill('Test importu — własny rzut')
     page.locator('#upload-files').set_input_files(str(fixture))
     page.locator('#upload-submit').click()
@@ -122,7 +132,7 @@ with sync_playwright() as p:
     if any(i['concept']>=16 for i in data['items']):
         page.locator('#latest').click()
         assert page.locator('.card').count()==sum(i['concept']>=16 for i in data['items'])
-        for view in [1,2,3]:
+        for view in [1,2,3,4]:
             page.locator(f'[data-view="{view}"]').click()
             assert page.locator('.card').count()==sum(i['concept']>=16 and i['view']==view for i in data['items'])
         page.locator('[data-view="all"]').click()

@@ -27,7 +27,7 @@ def add(file, n, title, description, view, series, attachments=None):
     if digest in seen: return
     seen.add(digest)
     items.append(dict(id=digest, concept=n, title=title, description=description, view=view, series=series,
-                      src=url, thumb=thumb, original=originals[view], attachments=attachments or []))
+                      src=url, thumb=thumb, original=originals.get(view), attachments=attachments or []))
 
 # Complete three-camera concepts first; never publish broken image references.
 for folder in sorted(NEW.glob('[0-9]*')):
@@ -77,8 +77,6 @@ for n, title, files, descriptions in [
 ]:
     for v, (filename, description) in enumerate(zip(files, descriptions), 1):
         attachments = []
-        if n == 20 and v == 1:
-            attachments.append(dict(name='Dodatkowy widok — front portalu.png', src='versions/tablety/04-front-portalu.png'))
         add(TABLETS / filename, n, title, description, v, 'Komplet · 3 rzuty', attachments)
 
 # Only coherent full series are shown. Preserve previous single views in the archive.
@@ -90,9 +88,18 @@ kept = {i['id'] for group in complete for i in group}
 archived = [i for i in items if i['id'] not in kept]
 (ROOT / 'versions/archive-catalog.json').write_text(json.dumps(archived, ensure_ascii=False, indent=2) + '\n')
 items = [i for group in complete for i in group]
+for main in [i for i in items if i['view'] == 1]:
+    add(ROOT / 'versions/portale' / f"{main['concept']:02}-portal-srodek.png", main['concept'], main['title'],
+        'Portal — środek · wejście w portal otwarty na przestrzał. Aranżacja sufitu i boków dopasowana do tej opcji; wolne przejście do alejki.',
+        4, main['series'])
+for item in items:
+    item['series'] = '3 rzuty + portal'
 items.sort(key=lambda x: (0 if x['concept']>=19 else 1 if x['concept']>=16 else 2, x['concept'], x['view']))
+numbering = {n: number for number, n in enumerate(dict.fromkeys(i['concept'] for i in items), 1)}
+for item in items:
+    item['number'] = numbering[item['concept']]
 data = dict(items=items, originals=originals, updated='2026-09-08')
 (ROOT / 'catalog.js').write_text('window.TARGI_CATALOG = ' + json.dumps(data, ensure_ascii=False) + ';\n')
 (ROOT / '.nojekyll').touch()
 shutil.copy2(ROOT / 'index.html', ROOT / 'start.html')
-print(json.dumps(dict(total=len(items), views={v:sum(i['view']==v for i in items) for v in [1,2,3]})))
+print(json.dumps(dict(total=len(items), views={v:sum(i['view']==v for i in items) for v in [1,2,3,4]})))
