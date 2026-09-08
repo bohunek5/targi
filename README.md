@@ -2,7 +2,7 @@
 
 Galeria: https://bohunek5.github.io/targi/
 
-54 wizualizacje, 18 koncepcji, trzy rzuty. Nowe koncepcje 16–18 zawierają po trzy ujęcia, oficjalne oznaczenie dystrybutora KLUŚ oraz reklamy i szuflady zamiast małych opraw na wskazanej ścianie portfolio. Wcześniejsze koncepcje pozostają w kolekcji.
+56 wizualizacji w 19 grupach koncepcji. Koncepcje 16–18 zawierają po trzy ujęcia, oficjalne oznaczenie dystrybutora KLUŚ oraz reklamy i szuflady zamiast małych opraw na wskazanej ścianie portfolio. Grupa 19 zawiera dwa zachowane warianty narożne z tabletami: bazowy oraz z portalem i fotometrią. Nie jest to komplet trzech rzutów. Pliki źródłowe obu wariantów są w `versions/tablety/`. Wcześniejsze koncepcje pozostają w kolekcji.
 
 Strona ma widok czterech kafelków w rzędzie i listy, filtry rzutów i koncepcji, ulubione, powiększenie, porównanie z oryginałem, pobieranie pojedynczych plików i ZIP, dodawanie własnych obrazów oraz eksport i import danych.
 

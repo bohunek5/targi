@@ -62,6 +62,14 @@ if (PREMIUM / 'concepts.json').exists():
         ]
         for v in [1,2,3]:
             add(PREMIUM / f'{c["n"]}-rzut-{v}.png', c['n'], c['title'], c['short'], v, 'Nowe · spójna seria', attachments)
+TABLETS = ROOT / 'versions/tablety'
+for filename, title, description in [
+    ('00-baza-tablety.png', 'Tablety — wariant bazowy', 'Cztery tablety z ofertą: taśmy LED, zasilanie, akcesoria i sterowniki.'),
+    ('01-naroznik-tablety.png', 'Tablety — portal i fotometria', 'Wariant narożny z tabletami, oznaczeniem dystrybutora KLUŚ i propozycją portalu z trzema jasnościami.'),
+]:
+    file = TABLETS / filename
+    if file.exists():
+        add(file, 19, title, description, 1, 'Warianty z tabletami')
 items.sort(key=lambda x: (0 if x['concept']>=16 else 1, x['concept'], x['view'], x['series']))
 data = dict(items=items, originals=originals, updated='2026-09-08')
 (ROOT / 'catalog.js').write_text('window.TARGI_CATALOG = ' + json.dumps(data, ensure_ascii=False) + ';\n')

@@ -26,7 +26,7 @@ function render() {
   $('#empty').hidden=visible.length>0;
   $('#visible-count').textContent=`(${visible.length})`;
   $('#section-title').firstChild.textContent=selectedView==='all'?'Wszystkie wizualizacje ':`Rzut ${selectedView} · ${labels[selectedView]} `;
-  $('#section-label').textContent=onlyFavorites?'TWOJE ULUBIONE':onlyMine?'TWOJE WIZUALIZACJE':onlyLatest?'NOWE KONCEPCJE · SZUFLADY + REKLAMY · KLUŚ OFICJALNY DYSTRYBUTOR':selectedView==='all'?'CAŁA KOLEKCJA':'RÓŻNE KONCEPCJE TEJ SAMEJ STRONY';
+  $('#section-label').textContent=onlyFavorites?'TWOJE ULUBIONE':onlyMine?'TWOJE WIZUALIZACJE':onlyLatest?'NOWE KONCEPCJE · REKLAMY, SZUFLADY I TABLETY':selectedView==='all'?'CAŁA KOLEKCJA':'RÓŻNE KONCEPCJE TEJ SAMEJ STRONY';
   $('#total-count').textContent=items.length;
   $('#concept-count').textContent=new Set(catalog.items.map(i=>i.concept)).size;
   $('#favorite-count').textContent=items.filter(i=>favorites.has(i.id)).length;

@@ -94,10 +94,10 @@ with sync_playwright() as p:
     page.goto(URL,wait_until='networkidle')
     if any(i['concept']>=16 for i in data['items']):
         page.locator('#latest').click()
-        assert page.locator('.card').count()==9
+        assert page.locator('.card').count()==sum(i['concept']>=16 for i in data['items'])
         for view in [1,2,3]:
             page.locator(f'[data-view="{view}"]').click()
-            assert page.locator('.card').count()==3
+            assert page.locator('.card').count()==sum(i['concept']>=16 and i['view']==view for i in data['items'])
         page.locator('[data-view="all"]').click()
         page.locator('#latest').click()
     page.screenshot(path=str(OUT/'desktop.png'))
