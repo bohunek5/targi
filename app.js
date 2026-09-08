@@ -22,7 +22,7 @@ function render() {
   const query=$('#search').value.trim().toLocaleLowerCase('pl');
   visible=items.filter(i=>(selectedView==='all'||String(i.view)===selectedView)&&(!onlyFavorites||favorites.has(i.id))&&(!onlyMine||i.custom)&&(!onlyLatest||i.concept>=16)&&(!onlyTablets||i.concept===19||i.concept===20)&&($('#concept').value==='all'||String(i.concept)===$('#concept').value)&&(!query||`${i.title} ${i.description} ${i.concept || ''}`.toLocaleLowerCase('pl').includes(query)));
   $('#gallery').className=`gallery ${layout}`;
-  const cardHTML=i=>`<article class="card" data-id="${i.id}"><button class="image-button" data-action="open" aria-label="Powiększ: ${escapeHTML(i.title)} — rzut ${i.view}"><img src="${escapeHTML(i.custom?source(i):i.thumb)}" alt="${escapeHTML(i.title)} — ${labels[i.view]}" loading="lazy" width="900" height="506"></button><button class="star ${favorites.has(i.id)?'on':''}" data-action="favorite" aria-pressed="${favorites.has(i.id)}" aria-label="${favorites.has(i.id)?'Usuń z':'Dodaj do'} ulubionych: ${escapeHTML(i.title)}">${favorites.has(i.id)?'★':'☆'}</button><div class="card-body"><div class="card-meta">${i.custom?'MOJE':String(i.concept).padStart(2,'0')} / RZUT ${i.view} · ${escapeHTML(i.series)}</div><h3>${escapeHTML(i.title)}</h3><p>${escapeHTML(i.description)}</p><div class="card-actions"><button data-action="open">Powiększ ↗</button><a href="${escapeHTML(source(i))}" download="${escapeHTML(downloadName(i))}">↓ Pobierz</a>${i.custom?'<button class="delete" data-action="delete">Usuń</button>':''}</div>${i.attachments?.some(a=>a.name.startsWith('Dodatkowy widok'))?`<a class="portal-preview" href="${escapeHTML(i.attachments.find(a=>a.name.startsWith('Dodatkowy widok')).src)}" target="_blank" rel="noopener">Front portalu ↗</a>`:''}${i.attachments?.length?`<details><summary>Materiały i plansze</summary>${i.attachments.map(a=>`<a href="${escapeHTML(a.src)}" download="${escapeHTML(a.name)}">↓ ${escapeHTML(a.name)}</a>`).join('')}</details>`:''}</div></article>`;
+  const cardHTML=i=>`<article class="card" data-id="${i.id}"><button class="image-button" data-action="open" aria-label="Powiększ: ${escapeHTML(i.title)} — rzut ${i.view}"><img src="${escapeHTML(i.custom?source(i):i.thumb)}" alt="${escapeHTML(i.title)} — ${labels[i.view]}" loading="lazy" width="900" height="506"></button><button class="star ${favorites.has(i.id)?'on':''}" data-action="favorite" aria-pressed="${favorites.has(i.id)}" aria-label="${favorites.has(i.id)?'Usuń z':'Dodaj do'} ulubionych: ${escapeHTML(i.title)}">${favorites.has(i.id)?'★':'☆'}</button><div class="card-body"><div class="card-meta">${i.custom?'MOJE':String(i.concept).padStart(2,'0')} / RZUT ${i.view} · ${escapeHTML(i.series)}</div><h3>${escapeHTML(i.title)}</h3><p>${escapeHTML(i.description)}</p><div class="card-actions"><button data-action="open">Powiększ ↗</button><a href="${escapeHTML(source(i))}" download="${escapeHTML(downloadName(i))}">↓ Pobierz</a>${i.custom?'<button class="delete" data-action="delete">Usuń</button>':''}</div>${i.attachments?.some(a=>a.name.startsWith('Dodatkowy widok'))?`<a class="portal-preview" href="${escapeHTML(i.attachments.find(a=>a.name.startsWith('Dodatkowy widok')).src)}" data-action="material" data-name="Front portalu">Front portalu ↗</a>`:''}${i.attachments?.length?`<details><summary>Materiały i plansze</summary>${i.attachments.map(a=>`<a href="${escapeHTML(a.src)}" data-action="material" data-name="${escapeHTML(a.name)}">${escapeHTML(a.name)} ↗</a>`).join('')}</details>`:''}</div></article>`;
   const groups=new Map();
   const seriesOrder={'Nowe · spójna seria':0,'Trzy rzuty':0,'Warianty z tabletami':0,'Pierwsze koncepcje':1,'Wcześniejsze warianty':2};
   const ordered=[...visible].sort((a,b)=>(a.custom?0:1)-(b.custom?0:1)||(a.concept>=19?0:a.concept>=16?1:2)-(b.concept>=19?0:b.concept>=16?1:2)||(a.concept||0)-(b.concept||0)||(seriesOrder[a.series]??3)-(seriesOrder[b.series]??3)||a.view-b.view);
@@ -56,6 +56,7 @@ $('#tablets').onclick=()=>{onlyTablets=!onlyTablets;onlyMine=onlyLatest=false;$(
 $('#search').oninput=render;$('#concept').onchange=render;
 $$('[data-reset]').forEach(button=>button.onclick=()=>{selectedView='all';onlyFavorites=onlyMine=onlyLatest=onlyTablets=false;$('#search').value='';$('#concept').value='all';history.replaceState(null,'',location.pathname);render();$('#search').focus();});
 $('#gallery').onclick=async e=>{const b=e.target.closest('[data-action]');if(!b)return;const id=b.closest('.card').dataset.id;
+  if(b.dataset.action==='material'){e.preventDefault();openMaterial(b.getAttribute('href'),b.dataset.name);return;}
   if(b.dataset.action==='favorite')toggleFavorite(id);
   if(b.dataset.action==='open')openViewer(id);
   if(b.dataset.action==='delete'){
@@ -63,6 +64,15 @@ $('#gallery').onclick=async e=>{const b=e.target.closest('[data-action]');if(!b)
     try { await writeDB('delete',[id]);uploads=uploads.filter(i=>i.id!==id);favorites.delete(id);if(urls.has(id)){URL.revokeObjectURL(urls.get(id));urls.delete(id);}savePreferences();rebuild();toast('Usunięto obraz.'); } catch { toast('Nie udało się usunąć obrazu.'); }
   }
 };
+function openMaterial(src,name) {
+  $('#material-title').textContent=name;
+  $('#material-image').src=src;
+  $('#material-image').alt=name;
+  $('#material-download').href=src;
+  $('#material-download').download=name;
+  $('#material-viewer').showModal();
+}
+$('#close-material').onclick=()=>$('#material-viewer').close();
 let viewerOrder=[];
 function openViewer(id) { currentId=id;comparing=false;viewerOrder=visible.map(i=>i.id);paintViewer();$('#viewer').showModal(); }
 function paintViewer() {

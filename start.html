@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#202a34">
   <meta name="description" content="Koncepcje stoiska PRESCOT LED. Trzy rzuty, różne warianty, ulubione i pobieranie wizualizacji.">
   <title>Targi · PRESCOT LED — wizualizacje stoiska</title>
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='8' fill='%23202a34'/%3E%3Cpath d='M12 30V10h11a7 7 0 0 1 0 14h-5v6m0-12h5a1 1 0 0 0 0-2h-5' fill='%23ed7149'/%3E%3C/svg%3E">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='8' fill='%23202a34'/%3E%3Cpath d='M12 30V10h11a7 7 0 0 1 0 14h-5v6m0-12h5a1 1 0 0 0 0-2h-5' fill='%23E14E26'/%3E%3C/svg%3E">
   <link rel="stylesheet" href="styles.css">
   <script src="catalog.js" defer></script>
   <script src="app.js" defer></script>
@@ -14,7 +14,7 @@
 <body>
 <a class="skip" href="#gallery">Przejdź do wizualizacji</a>
 <header>
-  <div class="brand-row"><a class="brand" href="./">PRESCOT<span>LED</span></a><span class="edition">TARGI / KONCEPCJE STOISKA / 2026</span><span class="edition-number">PRESCOT / KLUŚ / ELBA</span></div>
+  <div class="brand-row"><a class="brand" href="./" aria-label="PRESCOT LED — strona główna"><img src="assets/prescot-logo.svg" alt="PRESCOT LED" width="474" height="59"></a><span class="edition">TARGI / KONCEPCJE STOISKA / 2026</span><span class="edition-number">PRESCOT / KLUŚ / ELBA</span></div>
   <div class="hero"><div><p class="eyebrow">JEDNO STOISKO. RÓŻNE MOŻLIWOŚCI.</p><h1>Z każdej<br><em>strony.</em></h1></div><div class="hero-info"><p>Obejrzyj koncepcje z trzech stron.<br>Każda opcja ma rzuty 1, 2 i 3.<br>Zapisz ulubione<br>i pobierz wybrane wizualizacje.</p><div class="stats"><div><strong id="total-count">—</strong><span>wizualizacji</span></div><div><strong id="concept-count">—</strong><span>koncepcji</span></div><div><strong>3</strong><span>rzuty</span></div></div></div></div>
 </header>
 <main>
@@ -38,6 +38,7 @@
 </main>
 <footer><span>PRESCOT LED / TARGI 2026</span><a href="https://github.com/bohunek5/targi" target="_blank" rel="noopener">Repozytorium ↗</a></footer>
 <dialog id="viewer" aria-labelledby="viewer-title"><div class="viewer-head"><div><small id="viewer-label"></small><h2 id="viewer-title"></h2></div><button id="close-viewer" aria-label="Zamknij powiększenie">✕</button></div><div class="viewer-canvas"><button id="previous" aria-label="Poprzednia wizualizacja">←</button><img id="viewer-image" alt=""><button id="next" aria-label="Następna wizualizacja">→</button></div><div class="viewer-foot"><span id="viewer-position"></span><div><button id="compare">Pokaż oryginał</button><button id="viewer-favorite">☆ Ulubione</button><a id="viewer-download" class="button" download>↓ Pobierz obraz</a></div></div></dialog>
+<dialog id="material-viewer" aria-labelledby="material-title"><div class="viewer-head"><h2 id="material-title"></h2><button id="close-material" type="button" aria-label="Zamknij podgląd materiału">✕</button></div><img id="material-image" alt=""><div class="material-foot"><a id="material-download" class="button" download>↓ Pobierz</a></div></dialog>
 <dialog id="upload-dialog" aria-labelledby="upload-title"><form id="upload-form"><div class="dialog-head"><h2 id="upload-title">Dodaj wizualizacje</h2><button type="button" id="cancel-upload" aria-label="Zamknij dodawanie">✕</button></div><p>Wybierz rzut, do którego należą obrazy. Możesz dodać kilka plików jednocześnie.</p><label>Rzut<select id="upload-view" required><option value="1">Rzut 1 · Narożnik i portal</option><option value="2">Rzut 2 · Wnętrze i strefa rozmów</option><option value="3">Rzut 3 · KLUŚ / ELBA</option></select></label><label>Nazwa lub opis serii<input id="upload-title-input" maxlength="120" placeholder="Opcjonalnie, np. Wariant z ciemną ścianą"></label><label class="file-label">Wybierz obrazy<input id="upload-files" type="file" accept="image/png,image/jpeg,image/webp" multiple required></label><small>PNG, JPG lub WebP · do 20 MB na plik. Zapis tylko w tej przeglądarce; eksport pozwala zachować kopię.</small><p id="upload-error" role="alert"></p><button class="primary" type="submit" id="upload-submit">Dodaj do galerii</button></form></dialog>
 <div id="toast" role="status" aria-live="polite"></div>
 <noscript><p>Włącz JavaScript, aby korzystać z filtrów i galerii.</p></noscript>
