@@ -26,13 +26,13 @@
   </section>
   <div class="toolbar">
     <div class="filter-group"><button id="tablets" aria-pressed="false">Tablety · 2 opcje</button><button id="latest" aria-pressed="false">Nowe koncepcje i tablety</button><button id="favorites" aria-pressed="false">☆ Ulubione <span id="favorite-count">0</span></button><button id="mine" aria-pressed="false">Moje obrazy</button></div>
-    <label class="search"><span class="sr-only">Szukaj koncepcji</span><input id="search" type="search" placeholder="Szukaj koncepcji…"></label>
+    <div class="search"><label><span class="sr-only">Szukaj koncepcji</span><input id="search" type="search" placeholder="Szukaj koncepcji…"></label><button id="reset" type="button" data-reset title="Wyczyść wyszukiwanie i wszystkie filtry">Resetuj</button></div>
     <label class="sr-only" for="concept">Koncepcja</label><select id="concept"><option value="all">Każda koncepcja</option></select>
     <div class="layout-group" aria-label="Układ galerii"><button data-layout="grid" class="active" aria-pressed="true">▦ Kafelki</button><button data-layout="list" aria-pressed="false">☰ Lista</button></div>
   </div>
   <div class="collection-heading"><div><p class="eyebrow" id="section-label">CAŁA KOLEKCJA</p><h2 id="section-title">Wszystkie wizualizacje <span id="visible-count"></span></h2></div><div class="collection-actions"><button id="download-visible">↓ Pobierz widoczne ZIP</button><button class="primary" id="add">＋ Dodaj wizualizacje</button></div></div>
   <div id="gallery" class="gallery" tabindex="-1"></div>
-  <div id="empty" hidden><h2>Brak wizualizacji w tym widoku.</h2><p>Zmień rzut, wyłącz filtr lub dodaj własny obraz.</p><button id="reset">Wyczyść filtry</button></div>
+  <div id="empty" hidden><h2>Brak wizualizacji w tym widoku.</h2><p>Zmień rzut, wyłącz filtr lub dodaj własny obraz.</p><button type="button" data-reset>Wyczyść filtry</button></div>
   <section class="personal"><div><h3>Twoje wybory, pod ręką.</h3><p>Ulubione i dodane obrazy zapisują się w tej przeglądarce. Pobierz kopię, aby przenieść je na inne urządzenie. Dodane pliki są widoczne tylko u Ciebie.</p></div><div><button id="export">↓ Eksportuj moje dane</button><button id="import">↑ Importuj kopię</button><input id="import-file" type="file" accept="application/json,.json" hidden></div></section>
   <p class="concept-note">Wizualizacje koncepcyjne. W powiększeniu możesz porównać każdy rzut z oryginalnym projektem KLUŚ. Napisy i detale obrazów AI wymagają sprawdzenia przed przygotowaniem druku.</p>
 </main>

@@ -54,7 +54,7 @@ $('#mine').onclick=()=>{onlyMine=!onlyMine;render();};
 $('#latest').onclick=()=>{onlyLatest=!onlyLatest;onlyMine=onlyTablets=false;syncURL();render();};
 $('#tablets').onclick=()=>{onlyTablets=!onlyTablets;onlyMine=onlyLatest=false;$('#concept').value='all';$('#search').value='';syncURL();render();};
 $('#search').oninput=render;$('#concept').onchange=render;
-$('#reset').onclick=()=>{selectedView='all';onlyFavorites=onlyMine=onlyLatest=onlyTablets=false;$('#search').value='';$('#concept').value='all';history.replaceState(null,'',location.pathname);render();};
+$$('[data-reset]').forEach(button=>button.onclick=()=>{selectedView='all';onlyFavorites=onlyMine=onlyLatest=onlyTablets=false;$('#search').value='';$('#concept').value='all';history.replaceState(null,'',location.pathname);render();$('#search').focus();});
 $('#gallery').onclick=async e=>{const b=e.target.closest('[data-action]');if(!b)return;const id=b.closest('.card').dataset.id;
   if(b.dataset.action==='favorite')toggleFavorite(id);
   if(b.dataset.action==='open')openViewer(id);
