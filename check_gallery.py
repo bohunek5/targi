@@ -18,6 +18,11 @@ with sync_playwright() as p:
     data = page.evaluate('window.TARGI_CATALOG')
     total = len(data['items'])
     assert total >= 45
+    concepts_data = {}
+    for item in data['items']:
+        concepts_data.setdefault(item['concept'], []).append(item['view'])
+    assert all(sorted(views) == [1, 2, 3] for views in concepts_data.values()), concepts_data
+    assert [i['concept'] for i in data['items'][:6]] == [19, 19, 19, 20, 20, 20]
     assert page.locator('.card').count()==total
     # Every gallery file is reachable, including images lazy-loaded below the fold.
     paths = {item[k] for item in data['items'] for k in ['src','thumb','original']}
@@ -30,6 +35,16 @@ with sync_playwright() as p:
     concepts={i['id']:i['concept'] for i in data['items']}
     for y in {r['y'] for r in rows}:
         assert len({concepts[r['id']] for r in rows if r['y']==y})==1
+        assert len([r for r in rows if r['y']==y]) == 3
+    page.locator('#tablets').click()
+    assert page.locator('.card').count() == 6
+    assert page.locator('.concept-heading').all_text_contents() == [
+        'Tablety — opcja 1Komplet · 3 rzuty', 'Tablety — opcja 2Komplet · 3 rzuty']
+    page.reload(wait_until='networkidle')
+    assert page.locator('.card').count() == 6
+    assert page.locator('.portal-preview').count() == 1
+    assert context.request.get(URL + page.locator('.portal-preview').get_attribute('href')).ok
+    page.locator('#tablets').click()
     img=page.locator('.image-button img').first.bounding_box()
     assert abs(img['width']/img['height']-16/9)<.03
     for view in [1,2,3]:

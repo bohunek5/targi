@@ -1,0 +1,267 @@
+[
+  {
+    "id": "21b60db5e80b46fdabd8",
+    "concept": 1,
+    "title": "Linia światła",
+    "description": "Ciągły pas prowadzi przez cztery filary oferty i przechodzi na front szafki.",
+    "view": 1,
+    "series": "Pierwsze koncepcje",
+    "src": "assets/21b60db5e80b46fdabd8.png",
+    "thumb": "thumbs/21b60db5e80b46fdabd8.jpg",
+    "original": "assets/8033425076d832540bbc.jpeg",
+    "attachments": [
+      {
+        "name": "PORTFOLIO.svg",
+        "src": "assets/d64ba58b42102400b3f7.svg"
+      },
+      {
+        "name": "TOP1_3W1.svg",
+        "src": "assets/c16173de124bf6e1b493.svg"
+      },
+      {
+        "name": "PORTFOLIO.png",
+        "src": "assets/6d989d4dd2b3b3456c6f.png"
+      },
+      {
+        "name": "TOP1_3W1.png",
+        "src": "assets/c01a5d602f1b7453f139.png"
+      }
+    ]
+  },
+  {
+    "id": "afe76eecddb2e46c9461",
+    "concept": 2,
+    "title": "Galeria premium",
+    "description": "Jasna galeria produktów. Poprawiona: Wasza rolka PNG, PR-MAD, złączka BCX i profil KLUŚ PDS-T.",
+    "view": 1,
+    "series": "Pierwsze koncepcje",
+    "src": "assets/afe76eecddb2e46c9461.png",
+    "thumb": "thumbs/afe76eecddb2e46c9461.jpg",
+    "original": "assets/8033425076d832540bbc.jpeg",
+    "attachments": [
+      {
+        "name": "PORTFOLIO.svg",
+        "src": "assets/b767f969d0936327305a.svg"
+      },
+      {
+        "name": "TOP1_3W1.svg",
+        "src": "assets/853a2d37b30b2baef907.svg"
+      },
+      {
+        "name": "PORTFOLIO.png",
+        "src": "assets/3c22229d071501d51cbf.png"
+      },
+      {
+        "name": "TOP1_3W1.png",
+        "src": "assets/7b36a3023d094c94be8d.png"
+      }
+    ]
+  },
+  {
+    "id": "5d8318131a3c77c35ad9",
+    "concept": 3,
+    "title": "Od projektu do światła",
+    "description": "Techniczny układ pokazuje produkcję, kontrolę i kompletny system oświetlenia.",
+    "view": 1,
+    "series": "Pierwsze koncepcje",
+    "src": "assets/5d8318131a3c77c35ad9.png",
+    "thumb": "thumbs/5d8318131a3c77c35ad9.jpg",
+    "original": "assets/8033425076d832540bbc.jpeg",
+    "attachments": [
+      {
+        "name": "PORTFOLIO.svg",
+        "src": "assets/3254345531d70c1109cd.svg"
+      },
+      {
+        "name": "TOP1_3W1.svg",
+        "src": "assets/c16173de124bf6e1b493.svg"
+      },
+      {
+        "name": "PORTFOLIO.png",
+        "src": "assets/e46548adc19c35fa44a1.png"
+      },
+      {
+        "name": "TOP1_3W1.png",
+        "src": "assets/c01a5d602f1b7453f139.png"
+      }
+    ]
+  },
+  {
+    "id": "186170ebd407e0069362",
+    "concept": 4,
+    "title": "Jedna taśma. Trzy jasności.",
+    "description": "Największy nacisk na nowość 3w1 i hasło czytelne z alejki.",
+    "view": 1,
+    "series": "Pierwsze koncepcje",
+    "src": "assets/186170ebd407e0069362.png",
+    "thumb": "thumbs/186170ebd407e0069362.jpg",
+    "original": "assets/8033425076d832540bbc.jpeg",
+    "attachments": [
+      {
+        "name": "PORTFOLIO.svg",
+        "src": "assets/f9869dabdb11d34fef95.svg"
+      },
+      {
+        "name": "TOP1_3W1.svg",
+        "src": "assets/c16173de124bf6e1b493.svg"
+      },
+      {
+        "name": "PORTFOLIO.png",
+        "src": "assets/5987697fcecf8523a6b1.png"
+      },
+      {
+        "name": "TOP1_3W1.png",
+        "src": "assets/c01a5d602f1b7453f139.png"
+      }
+    ]
+  },
+  {
+    "id": "a4db3b1a1e284f162567",
+    "concept": 5,
+    "title": "Wstęga LED",
+    "description": "Jedna przestrzenna ilustracja taśmy łączy ofertę, bez podziału na bloczki.",
+    "view": 1,
+    "series": "Pierwsze koncepcje",
+    "src": "assets/a4db3b1a1e284f162567.png",
+    "thumb": "thumbs/a4db3b1a1e284f162567.jpg",
+    "original": "assets/8033425076d832540bbc.jpeg",
+    "attachments": [
+      {
+        "name": "PORTFOLIO.svg",
+        "src": "assets/8a93a09d8e9525f219f0.svg"
+      },
+      {
+        "name": "TOP1_3W1.svg",
+        "src": "assets/c16173de124bf6e1b493.svg"
+      },
+      {
+        "name": "PORTFOLIO.png",
+        "src": "assets/2bd5d831952678249f35.png"
+      },
+      {
+        "name": "TOP1_3W1.png",
+        "src": "assets/c01a5d602f1b7453f139.png"
+      }
+    ]
+  },
+  {
+    "id": "a6cbaf1864d72423957f",
+    "concept": 6,
+    "title": "Cztery linie oferty",
+    "description": "Cztery poziome wiersze na całą długość ściany zamiast czterech sąsiadujących bloczków.",
+    "view": 1,
+    "series": "Pierwsze koncepcje",
+    "src": "assets/a6cbaf1864d72423957f.png",
+    "thumb": "thumbs/a6cbaf1864d72423957f.jpg",
+    "original": "assets/8033425076d832540bbc.jpeg",
+    "attachments": []
+  },
+  {
+    "id": "da3c2bdfe330dbfcbf96",
+    "concept": 7,
+    "title": "Dynamiczna przekątna",
+    "description": "Duża przekątna łączy zdjęcie taśm z typografią, a motyw przechodzi na komodę.",
+    "view": 1,
+    "series": "Pierwsze koncepcje",
+    "src": "assets/da3c2bdfe330dbfcbf96.png",
+    "thumb": "thumbs/da3c2bdfe330dbfcbf96.jpg",
+    "original": "assets/8033425076d832540bbc.jpeg",
+    "attachments": []
+  },
+  {
+    "id": "eb886b4b2571b05a0aba",
+    "concept": 8,
+    "title": "Produkcja w Polsce",
+    "description": "Ujęcie wnętrza: zdjęcie produkcji, spokojne portfolio i plansza 3w1 obok zaplecza.",
+    "view": 2,
+    "series": "Pierwsze koncepcje",
+    "src": "assets/eb886b4b2571b05a0aba.png",
+    "thumb": "thumbs/eb886b4b2571b05a0aba.jpg",
+    "original": "assets/058cf947a8f5337e7256.jpeg",
+    "attachments": []
+  },
+  {
+    "id": "8d64db1fca9988980c5e",
+    "concept": 9,
+    "title": "Studio architekta",
+    "description": "Oszczędna typografia na belce i dużo jasnej przestrzeni wokół opraw.",
+    "view": 2,
+    "series": "Pierwsze koncepcje",
+    "src": "assets/8d64db1fca9988980c5e.png",
+    "thumb": "thumbs/8d64db1fca9988980c5e.jpg",
+    "original": "assets/058cf947a8f5337e7256.jpeg",
+    "attachments": []
+  },
+  {
+    "id": "eb258511f9b09117a1e1",
+    "concept": 10,
+    "title": "Trzy poziomy światła",
+    "description": "Jedna taśma pokazana przez trzy równoległe tory jasności: Low, Medium i High.",
+    "view": 1,
+    "series": "Pierwsze koncepcje",
+    "src": "assets/eb258511f9b09117a1e1.png",
+    "thumb": "thumbs/eb258511f9b09117a1e1.jpg",
+    "original": "assets/8033425076d832540bbc.jpeg",
+    "attachments": []
+  },
+  {
+    "id": "d96a34faed155dea754e",
+    "concept": 11,
+    "title": "Kompletny system",
+    "description": "Rzeczywiste produkty połączone jedną linią: taśma, zasilacz, złączka i profil.",
+    "view": 1,
+    "series": "Pierwsze koncepcje",
+    "src": "assets/d96a34faed155dea754e.png",
+    "thumb": "thumbs/d96a34faed155dea754e.jpg",
+    "original": "assets/8033425076d832540bbc.jpeg",
+    "attachments": []
+  },
+  {
+    "id": "a458f0c1fd9b6754059c",
+    "concept": 12,
+    "title": "PRESCOT × KLUŚ × ELBA",
+    "description": "Druga strona stoiska: czytelny podział marek i duże zdjęcie oprawy ELBA.",
+    "view": 3,
+    "series": "Pierwsze koncepcje",
+    "src": "assets/a458f0c1fd9b6754059c.png",
+    "thumb": "thumbs/a458f0c1fd9b6754059c.jpg",
+    "original": "assets/96259b301b7ad6a522af.jpeg",
+    "attachments": []
+  },
+  {
+    "id": "1a45440e3b12c519d00a",
+    "concept": 13,
+    "title": "Barwy natury / CRI97",
+    "description": "Jedna szeroka grafika zastosowania z archiwum i hasło serii CRI97.",
+    "view": 1,
+    "series": "Pierwsze koncepcje",
+    "src": "assets/1a45440e3b12c519d00a.png",
+    "thumb": "thumbs/1a45440e3b12c519d00a.jpg",
+    "original": "assets/8033425076d832540bbc.jpeg",
+    "attachments": []
+  },
+  {
+    "id": "94ffb2b92fa38391f0e3",
+    "concept": 14,
+    "title": "Makro Delux",
+    "description": "Duże zbliżenie prawdziwej taśmy i krótki komunikat o serii Delux.",
+    "view": 1,
+    "series": "Pierwsze koncepcje",
+    "src": "assets/94ffb2b92fa38391f0e3.png",
+    "thumb": "thumbs/94ffb2b92fa38391f0e3.jpg",
+    "original": "assets/8033425076d832540bbc.jpeg",
+    "attachments": []
+  },
+  {
+    "id": "94b60425845c95eaec86",
+    "concept": 15,
+    "title": "Historia światła",
+    "description": "Reportaż ze zdjęć firmy: siedziba i produkcja w jednym długim układzie.",
+    "view": 2,
+    "series": "Pierwsze koncepcje",
+    "src": "assets/94b60425845c95eaec86.png",
+    "thumb": "thumbs/94b60425845c95eaec86.jpg",
+    "original": "assets/058cf947a8f5337e7256.jpeg",
+    "attachments": []
+  }
+]

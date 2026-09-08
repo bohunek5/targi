@@ -63,14 +63,34 @@ if (PREMIUM / 'concepts.json').exists():
         for v in [1,2,3]:
             add(PREMIUM / f'{c["n"]}-rzut-{v}.png', c['n'], c['title'], c['short'], v, 'Nowe · spójna seria', attachments)
 TABLETS = ROOT / 'versions/tablety'
-for filename, title, description in [
-    ('00-baza-tablety.png', 'Tablety — wariant bazowy', 'Cztery tablety z ofertą: taśmy LED, zasilanie, akcesoria i sterowniki.'),
-    ('01-naroznik-tablety.png', 'Tablety — portal i fotometria', 'Wariant narożny z tabletami, oznaczeniem dystrybutora KLUŚ i propozycją portalu z trzema jasnościami.'),
+for n, title, files, descriptions in [
+    (19, 'Tablety — opcja 1', ['00-baza-tablety.png', '02-baza-wnetrze.png', '03-baza-elba.png'], [
+        'Rzut główny. Bazowy układ czterech tabletów, fotografia taśm i pomarańczowa linia na szafce.',
+        'Wnętrze tej samej opcji: cztery tablety po lewej, stół i duży telewizor z filmem z produkcji.',
+        'Strona ELBA: telewizor nad reklamą opraw ulicznych i parkowych, pomarańczowa linia i lada PRESCOT.',
+    ]),
+    (20, 'Tablety — opcja 2', ['01-naroznik-tablety.png', '02-wnetrze-tablety.png', '03-elba-tablety.png'], [
+        'Rzut główny. Jedna taśma. 3 jasności. KLUŚ Official Distributor przy lampie; portal LOW / MEDIUM / HIGH.',
+        'Wnętrze tej samej opcji: tablety, oznaczenie KLUŚ przy lampie i duży telewizor z produkcją przy stoliku.',
+        'Strona ELBA: logo, telewizor i podświetlana reklama opraw pod ekranem. Drugi TV pokazuje produkcję.',
+    ]),
 ]:
-    file = TABLETS / filename
-    if file.exists():
-        add(file, 19, title, description, 1, 'Warianty z tabletami')
-items.sort(key=lambda x: (0 if x['concept']>=16 else 1, x['concept'], x['view'], x['series']))
+    for v, (filename, description) in enumerate(zip(files, descriptions), 1):
+        attachments = []
+        if n == 20 and v == 1:
+            attachments.append(dict(name='Dodatkowy widok — front portalu.png', src='versions/tablety/04-front-portalu.png'))
+        add(TABLETS / filename, n, title, description, v, 'Komplet · 3 rzuty', attachments)
+
+# Only coherent full series are shown. Preserve previous single views in the archive.
+groups = {}
+for item in items:
+    groups.setdefault((item['concept'], item['series']), []).append(item)
+complete = [group for group in groups.values() if sorted(i['view'] for i in group) == [1, 2, 3]]
+kept = {i['id'] for group in complete for i in group}
+archived = [i for i in items if i['id'] not in kept]
+(ROOT / 'versions/archive-catalog.json').write_text(json.dumps(archived, ensure_ascii=False, indent=2) + '\n')
+items = [i for group in complete for i in group]
+items.sort(key=lambda x: (0 if x['concept']>=19 else 1 if x['concept']>=16 else 2, x['concept'], x['view']))
 data = dict(items=items, originals=originals, updated='2026-09-08')
 (ROOT / 'catalog.js').write_text('window.TARGI_CATALOG = ' + json.dumps(data, ensure_ascii=False) + ';\n')
 (ROOT / '.nojekyll').touch()

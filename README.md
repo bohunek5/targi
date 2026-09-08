@@ -2,7 +2,9 @@
 
 Galeria: https://bohunek5.github.io/targi/
 
-56 wizualizacji w 19 grupach koncepcji. Koncepcje 16–18 zawierają po trzy ujęcia, oficjalne oznaczenie dystrybutora KLUŚ oraz reklamy i szuflady zamiast małych opraw na wskazanej ścianie portfolio. Grupa 19 zawiera dwa zachowane warianty narożne z tabletami: bazowy oraz z portalem i fotometrią. Nie jest to komplet trzech rzutów. Pliki źródłowe obu wariantów są w `versions/tablety/`. Wcześniejsze koncepcje pozostają w kolekcji.
+45 wizualizacji w 15 kompletnych seriach. Każda seria ma dokładnie trzy rzuty w kolejności 1–2–3. Na początku są „Tablety — opcja 1” (19) i „Tablety — opcja 2” (20), następnie koncepcje 16–18 i kompletne serie 6–15. Obie opcje tabletów mają własne ujęcia wnętrza i strony ELBA. Filtr „Tablety · 2 opcje” pokazuje sześć obrazów: https://bohunek5.github.io/targi/?tablety=1 .
+
+Przy pierwszym rzucie opcji 2 jest dodatkowy front portalu: produkcja po lewej, fotometria po prawej, linie LOW / MEDIUM / HIGH na suficie. Pliki, opis oraz prompty imagegen są w `versions/tablety/`. Niepełne wcześniejsze warianty usunięto z galerii; ich spis zachowano w `versions/archive-catalog.json`, a obrazy pozostają w `assets/`.
 
 Strona ma widok trzech kafelków w rzędzie, pogrupowanych według koncepcji i serii, oraz widok listy, filtry rzutów i koncepcji, ulubione, powiększenie, porównanie z oryginałem, pobieranie pojedynczych plików i ZIP, dodawanie własnych obrazów oraz eksport i import danych.
 
@@ -22,6 +24,6 @@ Lokalnie: `python3 -m http.server 8765 --bind 127.0.0.1`, następnie http://127.
 
 ## Sprawdzenie
 
-`python3 check_gallery.py` — wymaga Playwright i Chromium. Test sprawdza pliki, filtry, ulubione po odświeżeniu, trzy kolumny i rozdzielenie koncepcji, listę, porównanie z oryginałem, integralność ZIP, dodawanie, eksport/import i brak poziomego przewijania na telefonie.
+`python3 check_gallery.py` — wymaga Playwright i Chromium. Test sprawdza komplet 1–2–3 w każdej serii, dwa osobne komplety tabletów, filtr tabletów po odświeżeniu, dodatkowy front portalu, dostępność plików, ulubione, trzy kolumny i rozdzielenie koncepcji, listę, porównanie z oryginałem, integralność ZIP, dodawanie, eksport/import i brak poziomego przewijania na telefonie.
 
 Publikacja GitHub Pages z gałęzi `main`, katalog `/`. Repozytorium jest oddzielone od pozostałych stron konta.
