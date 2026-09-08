@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#202a34">
+  <meta name="description" content="Koncepcje stoiska PRESCOT LED. Trzy rzuty, różne warianty, ulubione i pobieranie wizualizacji.">
+  <title>Targi · PRESCOT LED — wizualizacje stoiska</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='8' fill='%23202a34'/%3E%3Cpath d='M12 30V10h11a7 7 0 0 1 0 14h-5v6m0-12h5a1 1 0 0 0 0-2h-5' fill='%23ed7149'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="styles.css">
+  <script src="catalog.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#gallery">Przejdź do wizualizacji</a>
+<header>
+  <div class="brand-row"><a class="brand" href="./">PRESCOT<span>LED</span></a><span class="edition">TARGI / KONCEPCJE STOISKA / 2026</span><span class="edition-number">PRESCOT / KLUŚ / ELBA</span></div>
+  <div class="hero"><div><p class="eyebrow">JEDNO STOISKO. RÓŻNE MOŻLIWOŚCI.</p><h1>Z każdej<br><em>strony.</em></h1></div><div class="hero-info"><p>Obejrzyj koncepcje z trzech stron.<br>Porównaj warianty, zapisz ulubione<br>i pobierz wybrane wizualizacje.</p><div class="stats"><div><strong id="total-count">—</strong><span>wizualizacji</span></div><div><strong id="concept-count">—</strong><span>koncepcji</span></div><div><strong>3</strong><span>rzuty</span></div></div></div></div>
+</header>
+<main>
+  <section class="view-picker" aria-label="Wybierz rzut">
+    <button class="view-tab active all-tab" data-view="all" aria-pressed="true"><span class="tab-num">↗</span><span><strong>Wszystkie</strong><small>Cała kolekcja</small></span><b data-count="all">—</b></button>
+    <button class="view-tab" data-view="1" aria-pressed="false"><img id="reference-1" alt=""><span><strong>Rzut 1</strong><small>Narożnik i portal</small></span><b data-count="1">—</b></button>
+    <button class="view-tab" data-view="2" aria-pressed="false"><img id="reference-2" alt=""><span><strong>Rzut 2</strong><small>Wnętrze i plansza 3w1</small></span><b data-count="2">—</b></button>
+    <button class="view-tab" data-view="3" aria-pressed="false"><img id="reference-3" alt=""><span><strong>Rzut 3</strong><small>Druga strona · KLUŚ / ELBA</small></span><b data-count="3">—</b></button>
+  </section>
+  <div class="toolbar">
+    <div class="filter-group"><button id="latest" aria-pressed="false">Nowe 3 koncepcje</button><button id="favorites" aria-pressed="false">☆ Ulubione <span id="favorite-count">0</span></button><button id="mine" aria-pressed="false">Moje obrazy</button></div>
+    <label class="search"><span class="sr-only">Szukaj koncepcji</span><input id="search" type="search" placeholder="Szukaj koncepcji…"></label>
+    <label class="sr-only" for="concept">Koncepcja</label><select id="concept"><option value="all">Każda koncepcja</option></select>
+    <div class="layout-group" aria-label="Układ galerii"><button data-layout="grid" class="active" aria-pressed="true">▦ Kafelki</button><button data-layout="list" aria-pressed="false">☰ Lista</button></div>
+  </div>
+  <div class="collection-heading"><div><p class="eyebrow" id="section-label">CAŁA KOLEKCJA</p><h2 id="section-title">Wszystkie wizualizacje <span id="visible-count"></span></h2></div><div class="collection-actions"><button id="download-visible">↓ Pobierz widoczne ZIP</button><button class="primary" id="add">＋ Dodaj wizualizacje</button></div></div>
+  <div id="gallery" class="gallery" tabindex="-1"></div>
+  <div id="empty" hidden><h2>Brak wizualizacji w tym widoku.</h2><p>Zmień rzut, wyłącz filtr lub dodaj własny obraz.</p><button id="reset">Wyczyść filtry</button></div>
+  <section class="personal"><div><h3>Twoje wybory, pod ręką.</h3><p>Ulubione i dodane obrazy zapisują się w tej przeglądarce. Pobierz kopię, aby przenieść je na inne urządzenie. Dodane pliki są widoczne tylko u Ciebie.</p></div><div><button id="export">↓ Eksportuj moje dane</button><button id="import">↑ Importuj kopię</button><input id="import-file" type="file" accept="application/json,.json" hidden></div></section>
+  <p class="concept-note">Wizualizacje koncepcyjne. W powiększeniu możesz porównać każdy rzut z oryginalnym projektem KLUŚ. Napisy i detale obrazów AI wymagają sprawdzenia przed przygotowaniem druku.</p>
+</main>
+<footer><span>PRESCOT LED / TARGI 2026</span><a href="https://github.com/bohunek5/targi" target="_blank" rel="noopener">Repozytorium ↗</a></footer>
+<dialog id="viewer" aria-labelledby="viewer-title"><div class="viewer-head"><div><small id="viewer-label"></small><h2 id="viewer-title"></h2></div><button id="close-viewer" aria-label="Zamknij powiększenie">✕</button></div><div class="viewer-canvas"><button id="previous" aria-label="Poprzednia wizualizacja">←</button><img id="viewer-image" alt=""><button id="next" aria-label="Następna wizualizacja">→</button></div><div class="viewer-foot"><span id="viewer-position"></span><div><button id="compare">Pokaż oryginał</button><button id="viewer-favorite">☆ Ulubione</button><a id="viewer-download" class="button" download>↓ Pobierz obraz</a></div></div></dialog>
+<dialog id="upload-dialog" aria-labelledby="upload-title"><form id="upload-form"><div class="dialog-head"><h2 id="upload-title">Dodaj wizualizacje</h2><button type="button" id="cancel-upload" aria-label="Zamknij dodawanie">✕</button></div><p>Wybierz rzut, do którego należą obrazy. Możesz dodać kilka plików jednocześnie.</p><label>Rzut<select id="upload-view" required><option value="1">Rzut 1 · Narożnik i portal</option><option value="2">Rzut 2 · Wnętrze i plansza 3w1</option><option value="3">Rzut 3 · KLUŚ / ELBA</option></select></label><label>Nazwa lub opis serii<input id="upload-title-input" maxlength="120" placeholder="Opcjonalnie, np. Wariant z ciemną ścianą"></label><label class="file-label">Wybierz obrazy<input id="upload-files" type="file" accept="image/png,image/jpeg,image/webp" multiple required></label><small>PNG, JPG lub WebP · do 20 MB na plik. Zapis tylko w tej przeglądarce; eksport pozwala zachować kopię.</small><p id="upload-error" role="alert"></p><button class="primary" type="submit" id="upload-submit">Dodaj do galerii</button></form></dialog>
+<div id="toast" role="status" aria-live="polite"></div>
+<noscript><p>Włącz JavaScript, aby korzystać z filtrów i galerii.</p></noscript>
+</body></html>
