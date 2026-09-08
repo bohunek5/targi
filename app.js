@@ -19,8 +19,7 @@ function source(item) { if (!item.custom) return item.src; if (!urls.has(item.id
 function downloadName(item) { return `rzut-${item.view}_${String(item.concept || 'moje').padStart(2,'0')}_${item.title.replace(/[^\p{L}\p{N} -]/gu,'').replace(/\s+/g,'-').slice(0,65)}_${item.id.slice(-6)}.${item.custom ? ({'image/png':'png','image/jpeg':'jpg','image/webp':'webp'}[item.blob.type] || 'png') : item.src.split('.').pop()}`; }
 function rebuild() { items=[...uploads,...catalog.items]; render(); }
 function render() {
-  const query=$('#search').value.trim().toLocaleLowerCase('pl');
-  visible=items.filter(i=>(selectedView==='all'||String(i.view)===selectedView)&&(!onlyFavorites||favorites.has(i.id))&&(!onlyMine||i.custom)&&(!onlyLatest||i.concept>=16)&&(!onlyTablets||i.concept===19||i.concept===20)&&($('#concept').value==='all'||String(i.concept)===$('#concept').value)&&(!query||`${i.title} ${i.description} ${i.concept || ''}`.toLocaleLowerCase('pl').includes(query)));
+  visible=items.filter(i=>(selectedView==='all'||String(i.view)===selectedView)&&(!onlyFavorites||favorites.has(i.id))&&(!onlyMine||i.custom)&&(!onlyLatest||i.concept>=16)&&(!onlyTablets||i.concept===19||i.concept===20)&&($('#concept').value==='all'||String(i.concept)===$('#concept').value));
   $('#gallery').className=`gallery ${layout}`;
   const cardHTML=i=>`<article class="card" data-id="${i.id}"><button class="image-button" data-action="open" aria-label="Powiększ: ${escapeHTML(i.title)} — rzut ${i.view}"><img src="${escapeHTML(i.custom?source(i):i.thumb)}" alt="${escapeHTML(i.title)} — ${labels[i.view]}" loading="lazy" width="900" height="506"></button><button class="star ${favorites.has(i.id)?'on':''}" data-action="favorite" aria-pressed="${favorites.has(i.id)}" aria-label="${favorites.has(i.id)?'Usuń z':'Dodaj do'} ulubionych: ${escapeHTML(i.title)}">${favorites.has(i.id)?'★':'☆'}</button><div class="card-body"><div class="card-meta">${i.custom?'MOJE':String(i.concept).padStart(2,'0')} / RZUT ${i.view} · ${escapeHTML(i.series)}</div><h3>${escapeHTML(i.title)}</h3><p>${escapeHTML(i.description)}</p><div class="card-actions"><button data-action="open">Powiększ ↗</button><a href="${escapeHTML(source(i))}" download="${escapeHTML(downloadName(i))}">↓ Pobierz</a>${i.custom?'<button class="delete" data-action="delete">Usuń</button>':''}</div>${i.attachments?.some(a=>a.name.startsWith('Dodatkowy widok'))?`<a class="portal-preview" href="${escapeHTML(i.attachments.find(a=>a.name.startsWith('Dodatkowy widok')).src)}" data-action="material" data-name="Front portalu">Front portalu ↗</a>`:''}${i.attachments?.length?`<details><summary>Materiały i plansze</summary>${i.attachments.map(a=>`<a href="${escapeHTML(a.src)}" data-action="material" data-name="${escapeHTML(a.name)}">${escapeHTML(a.name)} ↗</a>`).join('')}</details>`:''}</div></article>`;
   const groups=new Map();
@@ -52,16 +51,22 @@ $$('[data-layout]').forEach(b=>b.onclick=()=>{layout=b.dataset.layout;savePrefer
 $('#favorites').onclick=()=>{onlyFavorites=!onlyFavorites;render();};
 $('#mine').onclick=()=>{onlyMine=!onlyMine;render();};
 $('#latest').onclick=()=>{onlyLatest=!onlyLatest;onlyMine=onlyTablets=false;syncURL();render();};
-$('#tablets').onclick=()=>{onlyTablets=!onlyTablets;onlyMine=onlyLatest=false;$('#concept').value='all';$('#search').value='';syncURL();render();};
-$('#search').oninput=render;$('#concept').onchange=render;
-$$('[data-reset]').forEach(button=>button.onclick=()=>{selectedView='all';onlyFavorites=onlyMine=onlyLatest=onlyTablets=false;$('#search').value='';$('#concept').value='all';history.replaceState(null,'',location.pathname);render();$('#search').focus();});
+$('#tablets').onclick=()=>{onlyTablets=!onlyTablets;onlyMine=onlyLatest=false;$('#concept').value='all';syncURL();render();};
+$('#concept').onchange=render;
+$$('[data-reset]').forEach(button=>button.onclick=()=>{selectedView='all';onlyFavorites=onlyMine=onlyLatest=onlyTablets=false;$('#concept').value='all';history.replaceState(null,'',location.pathname);render();});
 $('#gallery').onclick=async e=>{const b=e.target.closest('[data-action]');if(!b)return;const id=b.closest('.card').dataset.id;
   if(b.dataset.action==='material'){e.preventDefault();openMaterial(b.getAttribute('href'),b.dataset.name);return;}
   if(b.dataset.action==='favorite')toggleFavorite(id);
   if(b.dataset.action==='open')openViewer(id);
   if(b.dataset.action==='delete'){
-    if(!confirm('Usunąć ten dodany obraz z tej przeglądarki?'))return;
-    try { await writeDB('delete',[id]);uploads=uploads.filter(i=>i.id!==id);favorites.delete(id);if(urls.has(id)){URL.revokeObjectURL(urls.get(id));urls.delete(id);}savePreferences();rebuild();toast('Usunięto obraz.'); } catch { toast('Nie udało się usunąć obrazu.'); }
+    const removed=uploads.find(i=>i.id===id);if(!removed)return;
+    b.disabled=true;b.textContent='Usuwanie…';
+    try {
+      await writeDB('delete',[id]);uploads=uploads.filter(i=>i.id!==id);favorites.delete(id);
+      if(urls.has(id)){URL.revokeObjectURL(urls.get(id));urls.delete(id);}
+      savePreferences();rebuild();
+      toast('Usunięto obraz.');
+    } catch { b.disabled=false;b.textContent='Usuń';toast('Nie udało się usunąć obrazu. Spróbuj ponownie.'); }
   }
 };
 function openMaterial(src,name) {
@@ -111,7 +116,7 @@ $('#upload-form').onsubmit=async e=>{
     for(const file of $('#upload-files').files){await validateImage(file);const id=await imageId(file);if(uploads.some(i=>i.id===id)||batch.some(i=>i.id===id))continue;
       batch.push({id,custom:true,blob:file,title:$('#upload-title-input').value.trim()||file.name.replace(/\.[^.]+$/,''),description:file.name,view,series:'Dodane przeze mnie',original:catalog.originals[view],created:Date.now()});
     }
-    await writeDB('put',batch);uploads.unshift(...batch);selectedView=String(view);onlyFavorites=onlyLatest=onlyTablets=false;onlyMine=true;$('#concept').value='all';$('#search').value='';rebuild();$('#upload-dialog').close();$('#upload-form').reset();toast(batch.length?`Dodano ${batch.length} obrazów. Zapisano w tej przeglądarce.`:'Te obrazy są już w galerii.');
+    await writeDB('put',batch);uploads.unshift(...batch);selectedView=String(view);onlyFavorites=onlyLatest=onlyTablets=false;onlyMine=true;$('#concept').value='all';rebuild();$('#upload-dialog').close();$('#upload-form').reset();toast(batch.length?`Dodano ${batch.length} obrazów. Zapisano w tej przeglądarce.`:'Te obrazy są już w galerii.');
   } catch(e){$('#upload-error').textContent=e.message||'Nie udało się zapisać plików. Sprawdź wolne miejsce w przeglądarce.';} finally{button.disabled=false;}
 };
 function downloadBlob(blob,name) {const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),60000);}

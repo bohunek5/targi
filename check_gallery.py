@@ -78,10 +78,12 @@ with sync_playwright() as p:
         item=next(i for i in data['items'] if i['id']==id)
         assert hashlib.sha256(z.read(z.namelist()[0])).digest()==hashlib.sha256(context.request.get(URL+item['src']).body()).digest()
     page.locator('#favorites').click()
-    page.locator('#search').fill('nieistniejąca-koncepcja-xyz')
+    assert page.locator('#search').count()==0
+    page.locator('#mine').click()
     assert page.locator('#empty').is_visible()
     page.locator('#reset').click()
     # Upload, persist, export, delete and recover one image with its favorite.
+    favorites_before_upload=page.locator('#favorite-count').inner_text()
     fixture=next(ROOT.glob('thumbs/*.jpg'))
     page.locator('#add').click()
     page.locator('#upload-view').select_option('2')
@@ -100,9 +102,15 @@ with sync_playwright() as p:
     page.reload(wait_until='networkidle')
     page.locator('#mine').click()
     assert page.locator('.card').count()==1
-    page.once('dialog',lambda d:d.accept())
+    dialogs=[]
+    page.on('dialog',lambda d:(dialogs.append(d.message),d.dismiss()))
     page.locator('[data-action="delete"]').click()
     page.wait_for_selector('.card',state='detached')
+    page.reload(wait_until='networkidle')
+    page.locator('#mine').click()
+    assert page.locator('.card').count()==0
+    assert page.locator('#favorite-count').inner_text()==favorites_before_upload
+    assert not dialogs,dialogs
     page.locator('#import-file').set_input_files(str(backup))
     page.wait_for_selector('.card')
     assert page.locator('.card').first.get_attribute('data-id')==custom_id
