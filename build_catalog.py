@@ -98,7 +98,10 @@ items.sort(key=lambda x: (0 if x['concept']>=19 else 1 if x['concept']>=16 else 
 numbering = {n: number for number, n in enumerate(dict.fromkeys(i['concept'] for i in items), 1)}
 for item in items:
     item['number'] = numbering[item['concept']]
-data = dict(items=items, originals=originals, updated='2026-09-08')
+corrections = ROOT / 'versions/tablet-korekty/manifest.json'
+if corrections.exists():
+    items = json.loads(corrections.read_text()) + items
+data = dict(items=items, originals=originals, updated='2026-09-09')
 (ROOT / 'catalog.js').write_text('window.TARGI_CATALOG = ' + json.dumps(data, ensure_ascii=False) + ';\n')
 (ROOT / '.nojekyll').touch()
 shutil.copy2(ROOT / 'index.html', ROOT / 'start.html')

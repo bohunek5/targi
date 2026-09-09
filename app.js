@@ -19,19 +19,19 @@ function source(item) { if (!item.custom) return item.src; if (!urls.has(item.id
 function downloadName(item) { return `${item.view===4?'portal-srodek':'rzut-'+item.view}_${String(item.number || item.concept || 'moje').padStart(2,'0')}_${item.title.replace(/[^\p{L}\p{N} -]/gu,'').replace(/\s+/g,'-').slice(0,65)}_${item.id.slice(-6)}.${item.custom ? ({'image/png':'png','image/jpeg':'jpg','image/webp':'webp'}[item.blob.type] || 'png') : item.src.split('.').pop()}`; }
 function rebuild() { items=[...uploads,...catalog.items]; render(); }
 function render() {
-  visible=items.filter(i=>(selectedView==='all'||String(i.view)===selectedView)&&(!onlyFavorites||favorites.has(i.id))&&(!onlyMine||i.custom)&&(!onlyLatest||i.concept>=16)&&(!onlyTablets||i.concept===19||i.concept===20)&&($('#concept').value==='all'||String(i.concept)===$('#concept').value));
+  visible=items.filter(i=>(selectedView==='all'||String(i.view)===selectedView)&&(!onlyFavorites||favorites.has(i.id))&&(!onlyMine||i.custom)&&(!onlyLatest||i.concept>=16)&&(!onlyTablets||i.tabletCorrection||i.concept===19||i.concept===20)&&($('#concept').value==='all'||String(i.concept)===$('#concept').value));
   $('#gallery').className=`gallery ${layout}`;
   const cardHTML=i=>`<article class="card ${i.view===4?'portal-card':''}" data-id="${i.id}"><button class="image-button" data-action="open" aria-label="Powiększ: ${escapeHTML(i.title)} — ${i.view===4?'portal — środek':'rzut '+i.view}"><img src="${escapeHTML(i.custom?source(i):i.thumb)}" alt="${escapeHTML(i.title)} — ${labels[i.view]}" loading="lazy" width="900" height="506"></button><button class="star ${favorites.has(i.id)?'on':''}" data-action="favorite" aria-pressed="${favorites.has(i.id)}" aria-label="${favorites.has(i.id)?'Usuń z':'Dodaj do'} ulubionych: ${escapeHTML(i.title)}">${favorites.has(i.id)?'★':'☆'}</button><div class="card-body"><div class="card-meta">${i.custom?'MOJE':String(i.number || i.concept).padStart(2,'0')} / ${i.view===4?'PORTAL — ŚRODEK':'RZUT '+i.view} · ${escapeHTML(i.series)}</div><h3>${escapeHTML(i.title)}</h3><p>${escapeHTML(i.description)}</p><div class="card-actions"><button data-action="open">Powiększ ↗</button><a href="${escapeHTML(source(i))}" download="${escapeHTML(downloadName(i))}">↓ Pobierz</a>${i.custom?'<button class="delete" data-action="delete">Usuń</button>':''}</div>${i.attachments?.length?`<details><summary>Materiały i plansze</summary>${i.attachments.map(a=>`<a href="${escapeHTML(a.src)}" data-action="material" data-name="${escapeHTML(a.name)}">${escapeHTML(a.name)} ↗</a>`).join('')}</details>`:''}</div></article>`;
   const groups=new Map();
   const seriesOrder={'Nowe · spójna seria':0,'Trzy rzuty':0,'Warianty z tabletami':0,'Pierwsze koncepcje':1,'Wcześniejsze warianty':2};
-  const ordered=[...visible].sort((a,b)=>(a.custom?0:1)-(b.custom?0:1)||(a.concept>=19?0:a.concept>=16?1:2)-(b.concept>=19?0:b.concept>=16?1:2)||(a.concept||0)-(b.concept||0)||(seriesOrder[a.series]??3)-(seriesOrder[b.series]??3)||a.view-b.view);
+  const ordered=[...visible].sort((a,b)=>(a.priority??100)-(b.priority??100)||(a.custom?0:1)-(b.custom?0:1)||(a.concept>=19?0:a.concept>=16?1:2)-(b.concept>=19?0:b.concept>=16?1:2)||(a.concept||0)-(b.concept||0)||(seriesOrder[a.series]??3)-(seriesOrder[b.series]??3)||a.view-b.view);
   visible=ordered;
   for(const i of ordered){const groupKey=i.custom?'custom':`${i.concept}:${i.series}`;if(!groups.has(groupKey))groups.set(groupKey,[]);groups.get(groupKey).push(i);}
-  $('#gallery').innerHTML=[...groups.values()].map(group=>{const i=group[0];return `<h3 class="concept-heading">${i.custom?'Moje obrazy':`Wariant ${String(i.number || i.concept).padStart(2,'0')} · ${escapeHTML(i.title)}`}<span>${escapeHTML(i.custom?'Własna kolekcja':i.series)}</span></h3>`+group.map(cardHTML).join('');}).join('');
+  $('#gallery').innerHTML=[...groups.values()].map(group=>{const i=group[0];return `<h3 class="concept-heading">${i.custom?'Moje obrazy':i.tabletCorrection?'Tablety — korekty 1–4':`Wariant ${String(i.number || i.concept).padStart(2,'0')} · ${escapeHTML(i.title)}`}<span>${escapeHTML(i.custom?'Własna kolekcja':i.series)}</span></h3>`+group.map(cardHTML).join('');}).join('');
   $('#empty').hidden=visible.length>0;
   $('#visible-count').textContent=`(${visible.length})`;
   $('#section-title').firstChild.textContent=selectedView==='all'?'Wszystkie wizualizacje ':selectedView==='4'?'Portal — środek ':`Rzut ${selectedView} · ${labels[selectedView]} `;
-  $('#section-label').textContent=onlyFavorites?'TWOJE ULUBIONE':onlyMine?'TWOJE WIZUALIZACJE':onlyTablets?'TABLETY · DWIE OPCJE · RZUTY 1–3 + PORTAL':onlyLatest?'NOWE KONCEPCJE · REKLAMY, SZUFLADY I TABLETY':selectedView==='all'?'CAŁA KOLEKCJA':'RÓŻNE KONCEPCJE TEJ SAMEJ STRONY';
+  $('#section-label').textContent=onlyFavorites?'TWOJE ULUBIONE':onlyMine?'TWOJE WIZUALIZACJE':onlyTablets?'TABLETY · KOREKTY I WCZEŚNIEJSZE OPCJE':onlyLatest?'NOWE KONCEPCJE · REKLAMY, SZUFLADY I TABLETY':selectedView==='all'?'CAŁA KOLEKCJA':'RÓŻNE KONCEPCJE TEJ SAMEJ STRONY';
   $('#total-count').textContent=items.length;
   $('#concept-count').textContent=new Set(catalog.items.map(i=>i.concept)).size;
   $('#favorite-count').textContent=items.filter(i=>favorites.has(i.id)).length;
@@ -165,8 +165,8 @@ $('#download-visible').onclick=async()=>{
 async function init(){
   for(const v of [1,2,3])$('#reference-'+v).src=catalog.originals[v];
   $('#reference-4').src=catalog.items.find(i=>i.view===4).thumb;
-  const concepts=new Map(catalog.items.map(i=>[i.concept,i.title]));
-  [...concepts].sort((a,b)=>catalog.items.find(i=>i.concept===a[0]).number-catalog.items.find(i=>i.concept===b[0]).number).forEach(([n,title])=>{const option=document.createElement('option');option.value=n;option.textContent=String(catalog.items.find(i=>i.concept===n).number).padStart(2,'0')+' · '+title;$('#concept').append(option);});
+  const concepts=new Map(catalog.items.map(i=>[i.concept,i.tabletCorrection?'Tablety — korekty 1–4':i.title]));
+  [...concepts].sort((a,b)=>(catalog.items.find(i=>i.concept===a[0]).priority??100)-(catalog.items.find(i=>i.concept===b[0]).priority??100)||catalog.items.find(i=>i.concept===a[0]).number-catalog.items.find(i=>i.concept===b[0]).number).forEach(([n,title])=>{const option=document.createElement('option');option.value=n;option.textContent=(catalog.items.find(i=>i.concept===n).tabletCorrection?'Nowe':String(catalog.items.find(i=>i.concept===n).number).padStart(2,'0'))+' · '+title;$('#concept').append(option);});
   render();
   try{db=await openDB();uploads=await readDB();rebuild();}catch{toast('Pamięć przeglądarki jest niedostępna. Dodawanie obrazów wymaga zapisu lokalnego.');}
 }

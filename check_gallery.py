@@ -17,12 +17,14 @@ with sync_playwright() as p:
     page.goto(URL,wait_until='networkidle')
     data = page.evaluate('window.TARGI_CATALOG')
     total = len(data['items'])
-    assert total == 60
+    assert total == 64
     concepts_data = {}
     for item in data['items']:
-        concepts_data.setdefault(item['concept'], []).append(item['view'])
+        if not item.get('tabletCorrection'): concepts_data.setdefault(item['concept'], []).append(item['view'])
     assert all(sorted(views) == [1, 2, 3, 4] for views in concepts_data.values()), concepts_data
-    assert [i['concept'] for i in data['items'][:8]] == [19]*4 + [20]*4
+    assert [i['title'] for i in data['items'][:4]] == [f'Tablet korekta {n}' for n in range(1,5)]
+    assert [i['concept'] for i in data['items'][4:12]] == [19]*4 + [20]*4
+    assert page.locator('.card h3').all_text_contents()[:4] == [f'Tablet korekta {n}' for n in range(1,5)]
     assert sorted({i['number'] for i in data['items']}) == list(range(1,16))
     assert page.locator('.card').count()==total
     # Every gallery file is reachable, including images lazy-loaded below the fold.
@@ -38,11 +40,12 @@ with sync_playwright() as p:
         assert len({concepts[r['id']] for r in rows if r['y']==y})==1
         assert len([r for r in rows if r['y']==y]) == 4
     page.locator('#tablets').click()
-    assert page.locator('.card').count() == 8
+    assert page.locator('.card').count() == 12
     assert page.locator('.concept-heading').all_text_contents() == [
+        'Tablety — korekty 1–4Nowe korekty tabletów',
         'Wariant 01 · Tablety — opcja 13 rzuty + portal', 'Wariant 02 · Tablety — opcja 23 rzuty + portal']
     page.reload(wait_until='networkidle')
-    assert page.locator('.card').count() == 8
+    assert page.locator('.card').count() == 12
     assert page.locator('.portal-preview').count() == 0
     assert page.locator('.card details').count() == 0
     page.locator('#tablets').click()

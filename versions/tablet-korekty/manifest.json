@@ -1,0 +1,62 @@
+[
+  {
+    "id": "tablet-korekta-20260909-1",
+    "concept": 21,
+    "title": "Tablet korekta 1",
+    "description": "Jasna grafika: trzy rolki na wprost, wspólna taśma nad tabletami i pomarańczowa cyfra 3.",
+    "view": 2,
+    "series": "Nowe korekty tabletów",
+    "src": "assets/tablet-korekta-1.png",
+    "thumb": "thumbs/tablet-korekta-1.jpg",
+    "original": "assets/058cf947a8f5337e7256.jpeg",
+    "attachments": [],
+    "number": 1,
+    "priority": 1,
+    "tabletCorrection": true
+  },
+  {
+    "id": "tablet-korekta-20260909-2",
+    "concept": 21,
+    "title": "Tablet korekta 2",
+    "description": "Ciemne tło i ciepłe światło: trzy rolki łączą się w jedną taśmę przechodzącą przez narożnik.",
+    "view": 2,
+    "series": "Nowe korekty tabletów",
+    "src": "assets/tablet-korekta-2.png",
+    "thumb": "thumbs/tablet-korekta-2.jpg",
+    "original": "assets/058cf947a8f5337e7256.jpeg",
+    "attachments": [],
+    "number": 2,
+    "priority": 2,
+    "tabletCorrection": true
+  },
+  {
+    "id": "tablet-korekta-20260909-3",
+    "concept": 21,
+    "title": "Tablet korekta 3",
+    "description": "Polski producent oświetlenia LED nad tabletami; osobna, jasna grafika 3w1 na ścianie na wprost.",
+    "view": 2,
+    "series": "Nowe korekty tabletów",
+    "src": "assets/tablet-korekta-3.png",
+    "thumb": "thumbs/tablet-korekta-3.jpg",
+    "original": "assets/058cf947a8f5337e7256.jpeg",
+    "attachments": [],
+    "number": 3,
+    "priority": 3,
+    "tabletCorrection": true
+  },
+  {
+    "id": "tablet-korekta-20260909-4",
+    "concept": 21,
+    "title": "Tablet korekta 4",
+    "description": "Pomarańczowa plansza 3w1 na wprost i hasło o polskim producencie po lewej.",
+    "view": 2,
+    "series": "Nowe korekty tabletów",
+    "src": "assets/tablet-korekta-4.png",
+    "thumb": "thumbs/tablet-korekta-4.jpg",
+    "original": "assets/058cf947a8f5337e7256.jpeg",
+    "attachments": [],
+    "number": 4,
+    "priority": 4,
+    "tabletCorrection": true
+  }
+]

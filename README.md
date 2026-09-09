@@ -2,9 +2,9 @@
 
 Galeria: https://bohunek5.github.io/targi/
 
-60 wizualizacji w 15 kompletnych wariantach, ponumerowanych 01–15. Każdy ma trzy rzuty: 1 · narożnik, 2 · wnętrze, 3 · KLUŚ / ELBA oraz osobną pozycję „Portal — środek”. Na komputerze wszystkie cztery ujęcia wariantu są w jednym rzędzie; na mniejszych ekranach układ przechodzi do dwóch lub jednej kolumny.
+64 wizualizacje: cztery nowe „Tablet korekta 1”–„Tablet korekta 4” przypięte w pierwszym rzędzie oraz 15 wcześniejszych kompletnych wariantów, ponumerowanych 01–15. Każdy wcześniejszy wariant ma trzy rzuty: 1 · narożnik, 2 · wnętrze, 3 · KLUŚ / ELBA oraz osobną pozycję „Portal — środek”. Na komputerze wszystkie cztery ujęcia wariantu są w jednym rzędzie; na mniejszych ekranach układ przechodzi do dwóch lub jednej kolumny.
 
-Warianty 01 i 02 to dwie opcje tabletów. Filtr „Tablety · 2 opcje” pokazuje osiem obrazów: https://bohunek5.github.io/targi/?tablety=1 . Sam widok portali: https://bohunek5.github.io/targi/#4 . Numery źródłowych koncepcji pozostają wewnętrznymi identyfikatorami, dzięki czemu zachowano ulubione dotychczasowych obrazów.
+Warianty 01 i 02 to dwie opcje tabletów. Filtr „Tablety · korekty” pokazuje cztery nowe korekty oraz osiem wcześniejszych obrazów: https://bohunek5.github.io/targi/?tablety=1 . Sam widok portali: https://bohunek5.github.io/targi/#4 . Numery źródłowych koncepcji pozostają wewnętrznymi identyfikatorami, dzięki czemu zachowano ulubione dotychczasowych obrazów.
 
 Portal jest przejściem otwartym na przestrzał: bez tylnej ściany, z pustą podłogą i widokiem alejki za wyjściem. Dekoracja obejmuje wyłącznie boki i sufit. Każdy wariant ma własne ujęcie dopasowane do swojej grafiki oraz trzy linie światła na suficie LOW / MEDIUM / HIGH. Nieaktualny dodatkowy załącznik zamkniętego portalu usunięto. Nowe pliki i prompty są w `versions/portale/`.
 
@@ -26,6 +26,10 @@ Lokalnie: `python3 -m http.server 8765 --bind 127.0.0.1`, następnie http://127.
 
 ## Sprawdzenie
 
-`python3 check_gallery.py` — wymaga Playwright i Chromium. Sprawdza 15 kompletów: rzuty 1–3 + portal, numerację 01–15, dwa zestawy tabletów, cztery kolumny, filtr portali i brak fałszywego porównania z oryginałem dla portalu, dostępność plików, ulubione, pobieranie ZIP, dodawanie i import portalu, trwałe usuwanie bez potwierdzenia oraz układ mobilny.
+`python3 check_gallery.py` — wymaga Playwright i Chromium. Sprawdza kolejność czterech korekt, ich obecność w filtrze tabletów oraz 15 kompletów: rzuty 1–3 + portal, numerację 01–15, dwa zestawy tabletów, cztery kolumny, filtr portali i brak fałszywego porównania z oryginałem dla portalu, dostępność plików, ulubione, pobieranie ZIP, dodawanie i import portalu, trwałe usuwanie bez potwierdzenia oraz układ mobilny.
 
 Publikacja GitHub Pages z gałęzi `main`, katalog `/`. Repozytorium jest oddzielone od pozostałych stron konta.
+
+## Korekty tabletów — 9 września 2026
+
+Cztery nowe ujęcia wnętrza zachowują układ stoiska, tablety, TV i wspólne oznaczenie PRESCOT LED / KLUŚ Official Distributor. Dwie wersje pokazują taśmę przechodzącą przez narożnik; dwie rozdzielają reklamę 3w1 od hasła o polskim producencie. PNG są w `assets/tablet-korekta-*.png`, a prompty imagegen i lista nowych pozycji w `versions/tablet-korekty/`. Nowe pozycje nie zmieniają identyfikatorów wcześniejszych obrazów ani ich ulubionych.
